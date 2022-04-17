@@ -7,10 +7,10 @@
     <title>Flash Card | User</title>
 </head>
 <body>
-    <h1>Users</h1>
-    {% for user in users %}
-    <h1>{{user.name}}, {{user.id}}</h1>
-    <h2>Wordset: {{user.wordsets}}</h2>
+    <h1>Wordsets</h1>
+    {% for wordset in wordsets %}
+    <h1>{{wordset.name}}, {{wordset.id}}</h1>
+    <h2>(user: {{wordset.user_id}})</h2>
     {% endfor %}
 </body>
 </html>

@@ -63,9 +63,32 @@ def login():
         return render_template('login.html')
 
 # User creates a wordset
-@app.route("/create-wordset")
+@app.route("/create_wordset", methods=['POST', 'GET'])
 def create_wordset():
-    return "Create-wordset"
+    wordset_id = uuid.uuid4()
+    wordset_name = request.form['wordset_name']
+    new_wordset = Wordset(id=str(wordset_id),user_id=str(session['user_id']),name=wordset_name)
+    
+    try: 
+        db.session.add(new_wordset)
+        db.session.commit()
+        return redirect('/')
+    except:
+        return "Error: adding wordset"
+
+# Delete a wordset with id
+@app.route("/delete_wordset/<id>")
+def delete(id):
+    try:
+        wordset_to_delete = Wordset.query.get_or_404(id)
+    except:
+        return "Error: No user with id: %r" % id
+    try:
+        db.session.delete(wordset_to_delete)
+        db.session.commit()
+        return redirect('/wordset')
+    except:
+        return "Error: deleteing wordset"
 
 # When user logs out, delete a session data
 @app.route('/logout', methods=['GET', 'POST'])
@@ -100,6 +123,19 @@ def delete_user(id):
         return redirect(url_for('main'))
     except:
         return "Error: Deleting a user"
+
+# get users
+@app.route("/user")
+def user():
+    users = User.query.all()
+    return render_template('users.html', users=users)
+
+# Wordset helper functions
+# get Wordset
+@app.route("/wordset")
+def wordset():
+    wordsets = Wordset.query.all()
+    return render_template('wordsets.html', wordsets=wordsets)
 
 
 if __name__ == "__main__":
