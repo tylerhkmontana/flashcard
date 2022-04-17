@@ -1,4 +1,3 @@
-import uu
 from flask import Flask, session, request, url_for, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import uuid
@@ -14,17 +13,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 db = SQLAlchemy(app)
 
 
-# most likely will create a separate folder called "models" for all the database models
-# class Session(db.Model):
-#     id = db.Column()
 
+# Create a database if not exist
 db.create_all()
 
 # Main Dashboard
 @app.route("/")
 def main():
     user_id = session.get('user_id')
-    print(user_id)
+
     if user_id:
         return render_template('index.html')
     else:
@@ -42,13 +39,10 @@ def login():
     else:
         return render_template('login.html')
 
-@app.route("/test")
-def test_route():
-    if session.get('key'):
-        return f"Session value is {session.get('key')}"
-    else:
-        return 'no session'
-
+# User creates a wordset
+@app.route("/create-wordset")
+def create_wordset():
+    return 'create-wordset'
 
 if __name__ == "main":
     app.run(debug=True)

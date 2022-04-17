@@ -35,7 +35,7 @@ Class User
 
 Class Wordset
 	id - uuid(primary_key)
-	session_id - string(foreign_key)
+	user_id - string(foreign_key)
 	name - string
 
 Class Word
