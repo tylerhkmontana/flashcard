@@ -32,9 +32,12 @@ def main():
 def login():
     if request.method == 'POST':
         username = request.form['username']
-        # Later, we will store the data into databse
+        # Create uuid and save uuid and username in session
         session['user_id'] = uuid.uuid4()
         session['name'] = username
+
+        # Save User data in db
+
         return redirect(url_for('main'))
     else:
         return render_template('login.html')
@@ -43,6 +46,15 @@ def login():
 @app.route("/create-wordset")
 def create_wordset():
     return 'create-wordset'
+
+# When user logs out, delete a session data
+@app.route('/logout', methods=['GET', 'POST'])
+def logout():
+    session.pop("user_id", None)
+    session.pop("name", None)
+    return redirect(url_for("login"))
+
+
 
 if __name__ == "main":
     app.run(debug=True)

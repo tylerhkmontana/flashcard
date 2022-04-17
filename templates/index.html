@@ -9,5 +9,8 @@
 <body>
     <h1>Hello! {{ session.get('name') }}</h1>
     <h2>Your user id is {{ session.get('user_id') }}</h2>
+    <form method="POST" action="/logout">
+        <button type="submit">Logout</button>
+    </form> 
 </body>
 </html>
