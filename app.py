@@ -10,12 +10,33 @@ app.secret_key = 'secret'
 
 # local db connection
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
 
 # Create a database if not exist
 db.create_all()
+
+# Models
+
+# User model
+class User(db.Model):
+    id = db.Column(db.String(100), primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    wordsets = db.relationship('Wordset', backref='user', lazy=True, cascade="all, delete, delete-orphan")
+
+    def __repr__(self):
+        return '<User(%r) %r>' % (self.name, self.id)
+
+# Wordset model
+class Wordset(db.Model):
+    id = db.Column(db.String(100), primary_key=True)
+    user_id = db.Column(db.String(100), db.ForeignKey('user.id'), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return '<Wordset(%r) %r>' % (self.name, self.id)
 
 # Main Dashboard
 @app.route("/")
@@ -32,29 +53,54 @@ def main():
 def login():
     if request.method == 'POST':
         username = request.form['username']
+
         # Create uuid and save uuid and username in session
         session['user_id'] = uuid.uuid4()
         session['name'] = username
-
-        # Save User data in db
-
-        return redirect(url_for('main'))
+        
+        return redirect('/create_user/'+ str(session['user_id']) + '/' + username)          
     else:
         return render_template('login.html')
 
 # User creates a wordset
 @app.route("/create-wordset")
 def create_wordset():
-    return 'create-wordset'
+    return "Create-wordset"
 
 # When user logs out, delete a session data
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop("user_id", None)
+    id = session.pop("user_id", None)
     session.pop("name", None)
-    return redirect(url_for("login"))
+    return redirect("/delete_user/" + str(id))
 
 
+# User helper functions
+# Add a user
+@app.route("/create_user/<id>/<name>")
+def create_user(id, name):
+    new_user = User(id=id, name=name)
+    try: 
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect('/')
+    except:
+        return "Error: creating user with id(%r), name(%r)", (id,name)
 
-if __name__ == "main":
+# delete user
+@app.route("/delete_user/<id>")
+def delete_user(id):
+    try:
+        user_to_delete = User.query.get_or_404(id)
+    except:
+        return "Error: No user with id: %r" % id
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        return redirect(url_for('main'))
+    except:
+        return "Error: Deleting a user"
+
+
+if __name__ == "__main__":
     app.run(debug=True)
