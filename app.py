@@ -24,7 +24,7 @@ db.create_all()
 class User(db.Model):
     id = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    wordsets = db.relationship('Wordset', backref='user', lazy=True, cascade="all, delete, delete-orphan")
+    wordsets = db.relationship('Wordset', backref='user', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
         return '<User(%r) %r>' % (self.name, self.id)
