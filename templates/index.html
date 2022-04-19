@@ -4,21 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash Card | Dashboard</title>
+    <title>Flashcard | Dashboard</title>
 </head>
 <body>
     <h1>Hello! {{ session.get('name') }}</h1>
     <h2>Your user id is {{ session.get('user_id') }}</h2>
-    <form method="POST" action="/logout">
-        <button type="submit">Logout</button>
-    </form> 
+    <a href="/logout">logout</a>
     <br>
-    <h1>Create a wordset.</h1>
-    <form method="POST" action="/create_wordset">
-        <input type="text" name="wordset_name" placeholder="please enter the name of wordset" required>
-        <button type="submit">Create</button>
-    </form>
+    <a href="/create_wordset">create a wordset</a>
+
     <br>
-    
+    <h1>These are your wordsets</h1>
+    {% for wordset in wordsets %}
+        <p>{{wordset}}</p>
+    {% endfor %}
 </body>
 </html>

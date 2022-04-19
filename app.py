@@ -1,22 +1,19 @@
+import enum
 from flask import Flask, session, request, url_for, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+
+# *Should think about the way to check if a user has a session and the user id in the session exists
+# in the database, and if not, redirect him to '/login' like using a middleware*
 
 app = Flask(__name__)
 # set app secret key to encrypt session key - value
 app.secret_key = 'secret'
 
-# flask_uuid wrapper
-
 # local db connection
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-
-
-
-# Create a database if not exist
-db.create_all()
 
 # Models
 
@@ -27,16 +24,30 @@ class User(db.Model):
     wordsets = db.relationship('Wordset', backref='user', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '<User(%r) %r>' % (self.name, self.id)
+        return f"<User {self.name}, id: {self.id}>"
 
 # Wordset model
 class Wordset(db.Model):
     id = db.Column(db.String(100), primary_key=True)
     user_id = db.Column(db.String(100), db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
+    word = db.relationship('Word', backref='word', lazy=True, cascade="all, delete-orphan")
 
     def __repr__(self):
-        return '<Wordset(%r) %r>' % (self.name, self.id)
+        return f"<Wordset {self.name}, id: {self.id}>"
+
+# Word model
+class Word(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    wordset_id = db.Column(db.String(100), db.ForeignKey('wordset.id'), nullable=False)
+
+    def __repr__(self):
+        return f"<Word {self.name}, id: {self.id}"
+
+# Create a database if not exist
+db.create_all()
 
 # Main Dashboard
 @app.route("/")
@@ -44,7 +55,9 @@ def main():
     user_id = session.get('user_id')
 
     if user_id:
-        return render_template('index.html')
+        wordsets = Wordset.query.filter_by(user_id=user_id).all()
+        print(wordsets)
+        return render_template('index.html', wordsets=wordsets)
     else:
         return redirect(url_for('login'), code=302)
 
@@ -53,28 +66,82 @@ def main():
 def login():
     if request.method == 'POST':
         username = request.form['username']
+        user_id = str(uuid.uuid4()) # Default type of uuid.uuid4() is a class so need to convert it to a string
 
-        # Create uuid and save uuid and username in session
-        session['user_id'] = uuid.uuid4()
-        session['name'] = username
-        
-        return redirect('/create_user/'+ str(session['user_id']) + '/' + username)          
+        try: 
+             # Create a user in the database
+            new_user = User(id=user_id, name=username)
+            db.session.add(new_user)
+            db.session.commit()
+
+            # When a user is successfully added to the database, create a session
+            session['user_id'] = new_user.id
+            session['name'] = new_user.name
+            return redirect('/')
+        except:
+            return "Error: unable to create a user"        
     else:
-        return render_template('login.html')
+        if session.get('user_id'):
+            return redirect(url_for('main'), code=302)
+        else:
+            return render_template('login.html')
+
+# When user logs out, delete a session data
+@app.route('/logout')
+def logout():
+    user_id = session.get('user_id')
+    # Query a user associated with the user_id in the session
+    try:
+        user_to_delete = User.query.get_or_404(user_id)
+    except:
+        return f"Error: No user with id: {user_id}"
+
+    # Delete the user with the user_id
+    try:
+        db.session.delete(user_to_delete)
+        db.session.commit()
+
+        # pop the user from the session
+        session.pop("user_id", None)
+        session.pop("name", None)   
+        return redirect(url_for('main'))
+    except:
+        return "Error: Deleting a user"
 
 # User creates a wordset
 @app.route("/create_wordset", methods=['POST', 'GET'])
 def create_wordset():
-    wordset_id = uuid.uuid4()
-    wordset_name = request.form['wordset_name']
-    new_wordset = Wordset(id=str(wordset_id),user_id=str(session['user_id']),name=wordset_name)
-    
-    try: 
-        db.session.add(new_wordset)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return "Error: adding wordset"
+    if request.method == 'POST':
+        # create a wordset
+        wordset_id = uuid.uuid4()
+        wordset_name = request.form['wordset_name']
+        new_wordset = Wordset(id=str(wordset_id),user_id=str(session['user_id']),name=wordset_name)
+        
+        try: 
+            db.session.add(new_wordset)
+            db.session.commit()
+
+        except:
+            return "Error: adding wordset" 
+
+        # receives form data
+        words = request.form.getlist('word')
+        descriptions = request.form.getlist('description')
+
+        # create a word associtated with the created wordset
+        for index, word in enumerate(words):
+            new_word = Word(name=word, description=descriptions[index], wordset_id=new_wordset.id)
+
+            try:
+                db.session.add(new_word)
+                db.session.commit()
+            except:
+                return "Error: failed to add word"
+        return redirect(url_for('main'), code=302)
+    else:       
+        return render_template('create_wordset.html')
+
+############################### this is where you should pick it up from ##############################
 
 # Delete a wordset with id
 @app.route("/delete_wordset/<id>")
@@ -90,52 +157,13 @@ def delete(id):
     except:
         return "Error: deleteing wordset"
 
-# When user logs out, delete a session data
-@app.route('/logout', methods=['GET', 'POST'])
-def logout():
-    id = session.pop("user_id", None)
-    session.pop("name", None)
-    return redirect("/delete_user/" + str(id))
-
-
-# User helper functions
-# Add a user
-@app.route("/create_user/<id>/<name>")
-def create_user(id, name):
-    new_user = User(id=id, name=name)
-    try: 
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return "Error: creating user with id(%r), name(%r)", (id,name)
-
-# delete user
-@app.route("/delete_user/<id>")
-def delete_user(id):
-    try:
-        user_to_delete = User.query.get_or_404(id)
-    except:
-        return "Error: No user with id: %r" % id
-    try:
-        db.session.delete(user_to_delete)
-        db.session.commit()
-        return redirect(url_for('main'))
-    except:
-        return "Error: Deleting a user"
-
-# get users
-@app.route("/user")
-def user():
-    users = User.query.all()
-    return render_template('users.html', users=users)
-
 # Wordset helper functions
-# get Wordset
+# get the first wordset in the database and can see the words associated with the set
 @app.route("/wordset")
 def wordset():
-    wordsets = Wordset.query.all()
-    return render_template('wordsets.html', wordsets=wordsets)
+    wordset = Wordset.query.filter_by(user_id=session.get('user_id')).first()
+    words = Word.query.filter_by(wordset_id=wordset.id).all()
+    return render_template('wordsets.html', wordset=wordset, words=words)
 
 
 if __name__ == "__main__":
