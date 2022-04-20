@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
     <title>Flashcard | Dashboard</title>
 </head>
 <body>
@@ -15,8 +16,17 @@
 
     <br>
     <h1>These are your wordsets</h1>
-    {% for wordset in wordsets %}
-        <p>{{wordset}}</p>
-    {% endfor %}
+    <div class="wordset_container">
+        {% for wordset in wordsets %}
+        <div class="wordset">
+            <h4>{{ wordset.name }}</h4>
+            <a href="/study/{{wordset.id}}">study</a>
+            <a href="/test/{{wordset.id}}">test</a>
+            <form action="/delete_wordset/{{wordset.id}}" method="POST">
+                <button type="submit">delete</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

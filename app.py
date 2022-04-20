@@ -56,7 +56,6 @@ def main():
 
     if user_id:
         wordsets = Wordset.query.filter_by(user_id=user_id).all()
-        print(wordsets)
         return render_template('index.html', wordsets=wordsets)
     else:
         return redirect(url_for('login'), code=302)
@@ -141,21 +140,38 @@ def create_wordset():
     else:       
         return render_template('create_wordset.html')
 
+@app.route("/study/<id>")
+def study(id):
+    wordset = Wordset.query.filter_by(id=id).first()
+    words = Word.query.with_parent(wordset).all()
+
+    return render_template('study.html', wordset=wordset, words=words)
+
+@app.route("/test/<id>")
+def test(id):
+    wordset = Wordset.query.filter_by(id=id).first()
+    words = Word.query.with_parent(wordset).all()
+
+    return render_template('test.html', wordset=wordset, words=words)
+
 ############################### this is where you should pick it up from ##############################
 
 # Delete a wordset with id
-@app.route("/delete_wordset/<id>")
+@app.route("/delete_wordset/<id>", methods=['POST', 'GET'])
 def delete(id):
-    try:
-        wordset_to_delete = Wordset.query.get_or_404(id)
-    except:
-        return "Error: No user with id: %r" % id
-    try:
-        db.session.delete(wordset_to_delete)
-        db.session.commit()
-        return redirect('/wordset')
-    except:
-        return "Error: deleteing wordset"
+    if request.method == 'POST':
+        try:
+            wordset_to_delete = Wordset.query.get_or_404(id)
+        except:
+            return "Error: No user with id: %r" % id
+        try:
+            db.session.delete(wordset_to_delete)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return "Error: deleteing wordset"
+    else:
+        return redirect(url_for('main'))
 
 # Wordset helper functions
 # get the first wordset in the database and can see the words associated with the set

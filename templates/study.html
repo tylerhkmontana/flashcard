@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/study.css')}}">
+    <title>Flashcard | study</title>
+</head>
+<body>
+    <a href="/" id="back_button">back to dashboard</a>
+    <h1>Wordset Name: {{ wordset.name }}</h1>
+    <div class="wordset_container">
+        {% for word in words %}
+        <div class="word_container">
+            <h4>{{ word.name }}</h4>
+            <p>{{ word.description }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
