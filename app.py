@@ -34,7 +34,7 @@ class Wordset(db.Model):
     id = db.Column(db.String(100), primary_key=True)
     user_id = db.Column(db.String(100), db.ForeignKey('user.id'), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-
+    
     def __repr__(self):
         return '<Wordset(%r) %r>' % (self.name, self.id)
 
@@ -58,7 +58,14 @@ def login():
         session['user_id'] = uuid.uuid4()
         session['name'] = username
         
-        return redirect('/create_user/'+ str(session['user_id']) + '/' + username)          
+        # Create user on db
+        new_user = User(id=str(session['user_id']), name=username)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+        except:
+            return "Error: creating user with id(%r), name(%r)", (str(session['user_id']),username)
+        return redirect('/')          
     else:
         return render_template('login.html')
 
@@ -89,34 +96,17 @@ def delete(id):
         return redirect('/wordset')
     except:
         return "Error: deleteing wordset"
-
+    
 # When user logs out, delete a session data
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     id = session.pop("user_id", None)
     session.pop("name", None)
-    return redirect("/delete_user/" + str(id))
 
-
-# User helper functions
-# Add a user
-@app.route("/create_user/<id>/<name>")
-def create_user(id, name):
-    new_user = User(id=id, name=name)
-    try: 
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect('/')
-    except:
-        return "Error: creating user with id(%r), name(%r)", (id,name)
-
-# delete user
-@app.route("/delete_user/<id>")
-def delete_user(id):
     try:
-        user_to_delete = User.query.get_or_404(id)
+        user_to_delete = User.query.get_or_404(str(id))
     except:
-        return "Error: No user with id: %r" % id
+        return "Error: No user with id: %r" % str(id)
     try:
         db.session.delete(user_to_delete)
         db.session.commit()
