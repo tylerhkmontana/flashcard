@@ -1,0 +1,16 @@
+#back_button {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.wordset_container {
+    display: flex;
+}
+
+.word_container {
+    border: 1px solid black;
+    max-width: 300px;
+    padding: 20px;
+    margin: 20px;
+}
