@@ -29,8 +29,9 @@ async function testWord(id, time_limit){
     // give limited time to take a test on word
     await timeout(time_limit)
 
-    // when the time limit is passed, check the word with input
+    // when the time limit is passed, check the word description with input and empty input
     checkWord(id, document.getElementById(currentWord).querySelector('.description').value)
+    document.getElementById(currentWord).querySelector('.description').value = ''
 
     // hide the word after test is finished
     toggleWordVisibility(id)
@@ -61,11 +62,10 @@ function showResult(){
 
 // when enter button is clicked, run test on words that are not tested yet.
 test_enter_bt.addEventListener('click', async (e) => {
+    //check the word description with input and empty input
     checkWord(currentWord,document.getElementById(currentWord).querySelector('.description').value)
-    
-    // empty input
     document.getElementById(currentWord).querySelector('.description').value = ''
-    
+
     // clearTimeout for previous timeout
     clearTimeout(time_out)
 
