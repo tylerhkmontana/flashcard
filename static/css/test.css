@@ -1,3 +1,35 @@
 .word_container {
-    visibility: hidden;
+    display: none;
+}
+
+#wordset_container{
+    display: none;
+}
+
+.word_id{
+    /* display: none; */
+}
+
+.setting_container {
+    border: 1px solid black;
+    max-width: 300px;
+    padding: 20px;
+    margin: 20px;
+}
+
+.description {
+    min-width: 500px;
+    min-height: 40px;
+}
+
+.hidden_form{
+    display:none;
+}
+
+.test_start_bt{
+    display:block;
+}
+
+input{
+    margin: 20px;
 }

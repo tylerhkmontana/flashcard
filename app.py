@@ -181,6 +181,10 @@ def wordset():
     words = Word.query.filter_by(wordset_id=wordset.id).all()
     return render_template('wordsets.html', wordset=wordset, words=words)
 
+# Test Result Page Route
+@app.route("/result")
+def result():
+    return render_template('result.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

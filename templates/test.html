@@ -9,16 +9,27 @@
 </head>
 <body>
     <h1>Test</h1>
-    <button>start</button>
-
+    <div id="setting_container" class="setting_container">
+        <h2>Set time limit for each word.</h2>
+        <input type="text" name="time_limit" id="time_limit" maxlength="4" placeholder="(in seconds. default: 10s)" size=30>
+        <button id="test_start_bt">Start the test</button>
+    </div>
+    
+    
     <div id="wordset_container">
         {% for word in words %}
-        <div class="word_container">
+        <div id="{{word.id}}" class="word_container">
+            <h4 class="word_id">{{ word.id }}</h4>
             <h4>{{ word.name }}</h4>
             <p>{{ word.description }}</p>
+            <input class="description" type="text" id="description_input" placeholder="Enter the description">
+            
         </div>
         {% endfor %}
+        <button id="test_enter_bt">Enter</button>
     </div>
+    <form id="result_form" method="GET" action="/result" class="hidden_form" >
+    </form>
 
     <script src="{{url_for('static', filename='js/test.js')}}"></script>
 </body>
