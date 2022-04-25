@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='/css/create_wordset.css')}}">
-    <title>Flashcard | create a wordset</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block pagecss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/create_wordset.css') }}">
+{% endblock %}
+{% block title %}
+Create a wordset
+{% endblock %}
+
+{% block body %}
     <h1>Let's create a wordset!</h1>
-    <form action="/create_wordset" method="POST">
+    <a href="/" class="btn" id="back_button">back to dashboard</a>
+    <form style="margin-top: 50px; border: 5px dotted black; padding: 20px;" action="/create_wordset" method="POST">
         <input type="text" name="wordset_name" placeholder="name of the wordset">
-        <input id="num_words" type="number" name="num_words" placeholder="# of words" value="1" min="1">
+        <div>
+            <label for="num_words"># of words:</label>
+            <input id="num_words" type="number" name="num_words" placeholder="# of words" value="1" min="1">
+        </div>
       
         <div id="wordset_container">
             <div class="word_container">
@@ -20,9 +24,8 @@
             </div>
         </div>
 
-        <button type="submit">create</button>
+        <button class="btn" type="submit">create</button>
     </form>
 
     <script src="{{url_for('static', filename='/js/create_wordset.js')}}"></script>
-</body>
-</html>
+{% endblock %}

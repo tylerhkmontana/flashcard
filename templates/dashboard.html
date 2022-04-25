@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block pagecss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block body %}
+<h1 class="welcome_text">Welcome to Flashcard!</h1>
+
+<div class="btn_group">
+    <a class="btn" href="/create_wordset">create a wordset</a>
+    <a class="logout_btn btn" href="/logout">logout</a>
+</div>
+
+<h2 class="username_container">Hello! <span class="username">{{ session.get('name') }}</span></h2>
+
+<h2 style="width: 90%; margin: 50px auto;">These are your wordsets</h2>
+<div class="wordset_container">
+    {% for wordset in wordsets %}
+    <div class="wordset">
+        <h3>{{ wordset.name }}</h3>
+        <form action="/delete_wordset/{{wordset.id}}" method="POST">
+            <button class="btn delete_btn" type="submit">delete</button>
+        </form>
+        <div style="margin-top: 20px;">
+            <a class="btn" href="/study/{{wordset.id}}">study</a>
+            <a class="btn" href="/test/{{wordset.id}}">test</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,16 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard | login</title>
-</head>
-<body>
-    <h1>First time visiting Flash Card? Please login!</h1>
-    <form method="POST" action="/login">
-        <input type="text" name="username" placeholder="please enter your name" required>
-        <button type="submit">Enter</button>
-    </form> 
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block pagecss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+{% block title %}
+Login
+{% endblock %}
+
+{% block body %}
+<h1>First time visiting Flash Card? Please login!</h1>
+<form class="login_form" method="POST" action="/login">
+    <input type="text" name="username" placeholder="please enter your name" required>
+    <button class="btn" type="submit">Enter</button>
+</form> 
+{% endblock %}

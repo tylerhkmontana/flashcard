@@ -56,7 +56,7 @@ def main():
 
     if user_id:
         wordsets = Wordset.query.filter_by(user_id=user_id).all()
-        return render_template('index.html', wordsets=wordsets)
+        return render_template('dashboard.html', wordsets=wordsets)
     else:
         return redirect(url_for('login'), code=302)
 

@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/test.css')}}">
-    <title>Flashcard | Test</title>
-</head>
-<body>
-    <h1>Test</h1>
+{% extends 'base.html' %}
+
+{% block pagecss %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
+{% endblock %}
+{% block title %}
+Test
+{% endblock %}
+
+{% block body %}
     <div id="setting_container" class="setting_container">
         <h2>Set time limit for each word.</h2>
         <input type="text" name="time_limit" id="time_limit" maxlength="4" placeholder="(in seconds. default: 10s)" size=30>
-        <button id="test_start_bt">Start the test</button>
+        <button class="btn" id="test_start_bt">Start the test</button>
     </div>
     
     
@@ -21,16 +20,15 @@
         <div id="{{word.id}}" class="word_container">
             <h4 class="word_id">{{ word.id }}</h4>
             <h4>{{ word.name }}</h4>
-            <p>{{ word.description }}</p>
+            <p style="display: none;">{{ word.description }}</p>
             <input class="description" type="text" id="description_input" placeholder="Enter the description">
             
         </div>
         {% endfor %}
-        <button id="test_enter_bt">Enter</button>
+        <button class="btn" id="test_enter_bt">Enter</button>
     </div>
     <form id="result_form" method="GET" action="/result" class="hidden_form" >
     </form>
 
     <script src="{{url_for('static', filename='js/test.js')}}"></script>
-</body>
-</html>
+{% endblock %}

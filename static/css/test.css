@@ -2,19 +2,30 @@
     display: none;
 }
 
+.word_container > h4 {
+    text-align: center;
+}
+
 #wordset_container{
     display: none;
+    width: 400px;
+    margin: 200px auto;
 }
 
 .word_id{
-    /* display: none; */
+    display: none;
 }
 
 .setting_container {
-    border: 1px solid black;
-    max-width: 300px;
+    max-width: 400px;
     padding: 20px;
-    margin: 20px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.setting_container > h2 {
+    text-align: center;
 }
 
 .description {

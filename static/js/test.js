@@ -47,7 +47,7 @@ function checkWord(id, input){
 }
 
 function toggleWordVisibility(id){
-    document.getElementById(id).style.display = document.getElementById(id).style.display == "none" ? "block" : "none"
+    document.getElementById(id).style.display = document.getElementById(id).style.display == "none" ? "flex" : "none"
 }
 
 function timeout (ms) {

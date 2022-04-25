@@ -1,0 +1,13 @@
+h1 {
+    text-align: center;
+}
+
+.login_form {
+    margin: 150px auto;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 200px;
+}
+
