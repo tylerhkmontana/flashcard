@@ -21,7 +21,8 @@ const printScore = (testset) =>{
     //print score
     document.getElementById("score").innerHTML = correct + "/" + testset.length
     //print percentage
-    document.getElementById("percentage").innerHTML = percentage.toFixed(2) + "%"
+    console.log(percentage)
+    document.getElementById("percentage").innerHTML = percentage.toFixed(2) * 100 + "%"
     //print Incorrect words
     for(let i=0; i<testset.length; i++){
         if(testset[i].result == "incorrect"){
@@ -29,7 +30,7 @@ const printScore = (testset) =>{
             word_container.setAttribute("class", "word_container")
             let incorrect_word = document.createElement("h2")
             incorrect_word.innerHTML = testset[i].name
-            let incorrect_word_desc = document.createElement("h2")
+            let incorrect_word_desc = document.createElement("p")
             incorrect_word_desc.innerHTML = testset[i].description
             word_container.appendChild(incorrect_word)
             word_container.appendChild(document.createElement("hr"))

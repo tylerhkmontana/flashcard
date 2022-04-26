@@ -1,13 +1,17 @@
 .score_container{
-    border: 1px solid black;
+    border: 5px dotted black;
     max-width: 300px;
     padding: 20px;
     margin: 20px;
 }
 
 .word_container{
-    border: 1px solid black;
+    border: 1px solid red;
     max-width: 300px;
     padding: 20px;
     margin: 20px;
+}
+
+.word_container > h2, p {
+    color: red;
 }
