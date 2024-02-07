@@ -67,6 +67,16 @@
     border: 2px solid black;
 }
 
+.wordset h5 {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    /* overflow-x: hidden; */
+}
+
+.wordset h5:hover {
+    overflow: visible;
+}
+
 .wordset_btn_group {
     gap: 5px;
     display: flex;
