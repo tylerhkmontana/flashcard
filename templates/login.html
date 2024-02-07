@@ -8,9 +8,12 @@ Login
 {% endblock %}
 
 {% block body %}
-<h1>First time visiting Flash Card? Please login!</h1>
-<form class="login_form" method="POST" action="/login">
-    <input type="text" name="username" placeholder="please enter your name" required>
-    <button class="btn" type="submit">Enter</button>
-</form> 
+<div class="login">
+    <h1 class="title">Welcome to <span style="color: #E62F21; font-family: inherit;">Flash</span>-<span style="color: #FFD708; font-family: inherit;">card</span>! Please Login</h1>
+    <img class="welcome-image" src="{{ url_for('static', filename='images/flash-welcome.png') }}"/>
+    <form class="login_form" method="POST" action="/login">
+        <input type="text" name="username" placeholder="please enter your name" required>
+        <button class="btn" type="submit">Enter</button>
+    </form> 
+</div>
 {% endblock %}

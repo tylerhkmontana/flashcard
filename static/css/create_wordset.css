@@ -1,18 +1,29 @@
-h1 {
-    margin-top: 50px;
+.create_wordset_container {
+    display: flex;
+    flex-direction: column;
 }
 
-#back_button {
-    position: absolute;
-    right: 20px;
-    top: 20px;
+.create_wordset_form {
+    margin: 50px 0;
+    border: 5px dotted black; 
+    padding: 20px;
+}
+
+.back_btn {
+    border-color: #E62F21;
+    color: #E62F21;
+    align-self: flex-end;
+}
+
+.back_btn:hover {
+    background-color: #E62F21;
+    color: black;
 }
 
 #num_words {
-    margin-top: 20px;
-    border: none;
-    width: 30px;
-    background-color: transparent;
+    margin: 10px 0 30px 0;
+    border: 2px solid black;
+    width: 50px;
 }
 
 form {
@@ -23,8 +34,20 @@ form {
 
 .word_container {
     margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.word_container input {
-    margin: 10px;
+.input_word {
+    width: 100px;
+}
+
+.input_description {
+    width: 250px;
+}
+
+.create_btn {
+    width: 200px;
+    align-self: flex-end;
 }

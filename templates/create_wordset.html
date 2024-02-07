@@ -8,24 +8,29 @@ Create a wordset
 {% endblock %}
 
 {% block body %}
-    <h1>Let's create a wordset!</h1>
-    <a href="/" class="btn" id="back_button">back to dashboard</a>
-    <form style="margin-top: 50px; border: 5px dotted black; padding: 20px;" action="/create_wordset" method="POST">
-        <input type="text" name="wordset_name" placeholder="name of the wordset">
-        <div>
-            <label for="num_words"># of words:</label>
-            <input id="num_words" type="number" name="num_words" placeholder="# of words" value="1" min="1">
-        </div>
-      
-        <div id="wordset_container">
-            <div class="word_container">
-                <input name="word" placeholder="word">
-                <input name="description" placeholder="description">
+    <!-- <h1>Let's create a wordset!</h1> -->
+    <div class="create_wordset_container">
+        <form class="create_wordset_form" action="/create_wordset" method="POST">
+            <a href="/" class="btn back_btn">back to dashboard</a>
+            <h1 class="title">Let's create a study set</h1>
+            <br/>
+            <input type="text" name="wordset_name" placeholder="name of the study set" required>
+            <div>
+                <label for="num_words"># of words:</label>
+                <input id="num_words" type="number" name="num_words" placeholder="# of words" value="1" min="1">
             </div>
-        </div>
-
-        <button class="btn" type="submit">create</button>
-    </form>
+          
+            <div id="wordset_container">
+                <div class="word_container">
+                    <label>1. </label>
+                    <input class="input_word" name="word" placeholder="word" required>
+                    <input class="input_description" name="description" placeholder="description" required>
+                </div>
+            </div>
+    
+            <button class="btn create_btn" type="submit">create</button>
+        </form>
+    </div>
 
     <script src="{{url_for('static', filename='/js/create_wordset.js')}}"></script>
 {% endblock %}

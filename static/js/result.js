@@ -25,18 +25,21 @@ const printScore = (testset) =>{
     document.getElementById("percentage").innerHTML = percentage.toFixed(2) * 100 + "%"
     //print Incorrect words
     for(let i=0; i<testset.length; i++){
-        if(testset[i].result == "incorrect"){
-            let word_container = document.createElement("div")
-            word_container.setAttribute("class", "word_container")
-            let incorrect_word = document.createElement("h2")
-            incorrect_word.innerHTML = testset[i].name
-            let incorrect_word_desc = document.createElement("p")
-            incorrect_word_desc.innerHTML = testset[i].description
-            word_container.appendChild(incorrect_word)
-            word_container.appendChild(document.createElement("hr"))
-            word_container.appendChild(incorrect_word_desc)
-            document.getElementById("incorrect_words").appendChild(word_container)
-        }
+        // warpper container for the result of tested words
+        let word_container = document.createElement("div")
+        word_container.setAttribute("class", `word_container ${testset[i].result}`)
+
+        // result of each tested word
+        let word = document.createElement("h3")
+        word.innerHTML = testset[i].name
+        let word_desc = document.createElement("p")
+        word_desc.innerHTML = `<strong>Correct Answer</strong> ${testset[i].description}`
+        let word_answer = document.createElement("p")
+        word_answer.innerHTML = `<strong>Your Answer</strong> ${testset[i].answer}`
+        word_container.appendChild(word)
+        word_container.appendChild(word_answer)
+        word_container.appendChild(word_desc)
+        document.getElementById("the_result").appendChild(word_container)
     }
 }
 

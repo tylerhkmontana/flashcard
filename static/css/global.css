@@ -2,22 +2,35 @@
     margin: 0;
     padding: 0;
     font-family: 'Varela Round', sans-serif;
+    --flash-red : #E62F21;
+    --flash-yellow: #FFD708;
 }
 
 body {
     padding: 20px;
+    max-width: 740px;
+    margin: auto;
+    background-color: rgb(74, 151, 245);
+}
+
+.title {
+    font-family: 'Bangers', cursive;
+    letter-spacing: .15rem;
 }
 
 .btn {
-    border-radius: 5px;
-    border: 1px solid black;
+    background-color: transparent;
+    /* border-radius: 5px; */
+    border: 2px solid white;
+    color: white;
     padding: 5px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .btn:hover {
-    background-color: black;
-    color: white;
-    transition: 0.5s;
+    background-color: white;
+    color: black;
     cursor: pointer;
 }
 
@@ -26,9 +39,9 @@ a {
     color: black;
 }
 
-a:visited {
+/* a:visited {
     color: black;
-}
+} */
 
 button {
     background-color: transparent;
@@ -37,8 +50,8 @@ button {
 input {
     padding: 5px;
     text-align: center;
-    border: none;
-    background-color: #f4f4f4;
+    border: 2px solid black;
+    /* background-color: #f4f4f4; */
 }
 
 input:focus {

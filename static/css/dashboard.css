@@ -1,66 +1,158 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px dotted black;
+    padding: 20px;
+}
+
 .welcome_text {
     text-align: center;
-    font-family: 'Bangers', cursive;
-    margin-top: 50px;
+}
+
+.flash {
+    width: 250px;
 }
 
 .username_container {
-    margin-top: 50px;
-    text-align: center;
-}
-
-.username {
-    border-radius: 5px;
-    color: white;
     background-color: black;
+    width: 200px;
+    color: white;
+    text-align: center;
     padding: 5px;
 }
 
-.btn_group {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.profile {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
+
+.profile .btn, .btn_group .logout_btn { width: 200px; }
+
 .logout_btn {
-    border-color: red;
-    color: red;
-    margin-left: 10px;
+    border-color: #E62F21;
+    color: #E62F21;
 }
 
 .logout_btn:hover {
-    background-color: red;
+    background-color: #E62F21;
+}
+
+.no_study_set {
+    border: 5px dotted black;
+    padding: 10px;
 }
 
 .wordset_container {
+    display: flex;
+    flex-direction: column;
     border: 5px dotted black;
-    width: 90%;
-    margin: 50px auto;
-    min-height: 300px;
+    gap: 20px;
+    padding: 20px;
 }
 
 .wordset {
-    background-color: #f4f4f4;
-    border-radius: 15px;
-    width: 150px;
-    height: 150px;
     padding: 20px;
-    margin: 20px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
     position: relative;
+    border: 2px solid black;
+}
+
+.wordset_btn_group {
+    gap: 5px;
+    display: flex;
+}
+
+.test {
+    border-color: #FFD708;
+    color: #FFD708;
+}
+
+.test:hover {
+    background-color: #FFD708;
 }
 
 .delete_btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: red;
-    border:none;
+  font-weight: bold;
+  border-color: #E62F21;
+  color: #E62F21;
 }
 
 .delete_btn:hover {
-    background-color: red;
+    background-color: #E62F21;
+}
+
+#popup_delete, #popup_exit {
+    visibility: hidden;
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main_popup_delete, #main_popup_exit {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border: 2px solid black;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+#main_popup_exit p, #main_popup_delete p {
+    text-align: center;
+}
+
+#main_popup_exit .btn, #main_popup_delete .btn {
+    flex: 1;
+    border-color: var(--flash-yellow);
+    color: var(--flash-yellow);
+}
+
+#main_popup_exit .btn:hover, #main_popup_delete .btn:hover {
+    background-color: var(--flash-yellow);
+    color: black;
+}
+
+#main_popup_exit .confirm_btn, #main_popup_delete .confirm_btn {
+    border-color: var(--flash-red);
+    color: var(--flash-red);
+}
+
+#main_popup_exit .confirm_btn:hover, #main_popup_delete .confirm_btn:hover {
+    background-color: var(--flash-red);
+    color: black;
+}
+
+.close_popup {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.confirm_or_cancel {
+    align-self: stretch;
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
 }

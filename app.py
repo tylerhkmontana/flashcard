@@ -160,6 +160,7 @@ def test(id):
 @app.route("/delete_wordset/<id>", methods=['POST', 'GET'])
 def delete(id):
     if request.method == 'POST':
+        print("Received")
         try:
             wordset_to_delete = Wordset.query.get_or_404(id)
         except:
