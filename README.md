@@ -50,7 +50,7 @@ You can study a set of words in the same manner as you would study words on inde
 
 ### Test
 
-You can take the test on a study set to see how well you memorized the words.
+You can take the test on a study set to see how well you memorized the words. You need to set a time limit for each question, and when you start the test, a set of words in the study set will be shown in random order. 
 
 ![chrome-capture-2024-3-5 (4)](https://github.com/tylerhkmontana/flashcard/assets/63427616/862b7267-7c70-4a84-9a50-45ffed538106)
 
@@ -59,6 +59,12 @@ You can take the test on a study set to see how well you memorized the words.
 ![#FED430](https://placehold.co/15x15/FED430/FED430.png) If you don't know the answer at all, you can `skip` a question and it automatically takes it as a wrong answer
 
 ![chrome-capture](https://github.com/tylerhkmontana/flashcard/assets/63427616/0d77a646-b363-4fdc-bf4b-2da720e55be7)
+
+### Result
+
+After finishing the test, it will bring you to the result page, and you can see your score and details of your correct and incorrect answers.
+
+![chrome-capture-2024-3-6](https://github.com/tylerhkmontana/flashcard/assets/63427616/20c066ac-c7c0-4881-b354-7680c96dd324)
 
 
 
