@@ -3,6 +3,11 @@
 
 a *full-stack flask applictaion* which can be used as an aid to memorize vocabulary. <br><br>
 
+## Built With
+![Python Badge](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=for-the-badge)
+![Flask Badge](https://img.shields.io/badge/Flask-000?logo=flask&logoColor=fff&style=for-the-badge)
+![SQLAlchemy Badge](https://img.shields.io/badge/SQLAlchemy-D71F00?logo=sqlalchemy&logoColor=fff&style=for-the-badge)
+
 ## How to run the program
 
 - Clone the repository.
