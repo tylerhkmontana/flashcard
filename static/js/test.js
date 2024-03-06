@@ -85,9 +85,9 @@ function timeout (ms) {
     })
 }
 
-// set cookie with a testset array and send them to result page
+// set localstorage with a testset array and send them to result page
 function showResult(){
-    document.cookie="testset=" + JSON.stringify(testset) + ";path=/result"
+    localStorage.setItem('testResult', JSON.stringify(testset))
     window.location.href="../result"
 }
 

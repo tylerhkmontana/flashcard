@@ -22,8 +22,8 @@
 
 #num_words {
     margin: 10px 0 30px 0;
-    border: 2px solid black;
     width: 50px;
+    caret-color: transparent;
 }
 
 form {

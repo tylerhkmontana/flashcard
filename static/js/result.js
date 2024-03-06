@@ -7,8 +7,8 @@ function parseCookie(cookie){
       return acc;
     }, {});
 }
-const parsedCookie = parseCookie(document.cookie)
-const testset = JSON.parse(parsedCookie.testset)
+
+const testset = JSON.parse(localStorage.getItem('testResult'))
 
 const printScore = (testset) =>{
     let correct = 0;
@@ -21,7 +21,6 @@ const printScore = (testset) =>{
     //print score
     document.getElementById("score").innerHTML = correct + "/" + testset.length
     //print percentage
-    console.log(percentage)
     document.getElementById("percentage").innerHTML = percentage.toFixed(2) * 100 + "%"
     //print Incorrect words
     for(let i=0; i<testset.length; i++){
