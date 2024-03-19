@@ -50,7 +50,7 @@ class Word(db.Model):
         return f"<Word {self.name}, id: {self.id}"
 
 # Create a database if not exist
-# db.create_all()
+db.create_all()
 
 # Main Dashboard
 @app.route("/")
