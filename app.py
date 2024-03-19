@@ -11,10 +11,10 @@ app = Flask(__name__)
 app.secret_key = 'secret'
 
 # local db connection
-if ENV == 'dev':
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
-else: 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u563uq13927pv8:p3a1695dab31bf5214b4ef8a5d0b8bc1c35515278df177964bee0bc0969a18eb6@ceu9lmqblp8t3q.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d4nven4jtj5jc5'
+# if ENV == 'dev':
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///main.db'
+# else: 
+#     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://u563uq13927pv8:p3a1695dab31bf5214b4ef8a5d0b8bc1c35515278df177964bee0bc0969a18eb6@ceu9lmqblp8t3q.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d4nven4jtj5jc5'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
